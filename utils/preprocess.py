@@ -54,7 +54,7 @@ class ShortSequenceDataset:
         return "".join( [self.vocab[y] for y in ys] )
 
     def expand(self, encoded):
-        padded = pad_left(encoded, self.context_size, self.init_code)
+        padded = pad_left(encoded, self.context_size+1, self.init_code)
         x = padded[:len(padded)-1]
         y = padded[1:]
         return (x, y)
