@@ -21,7 +21,7 @@ class ShortSequenceDataset:
         return len(self.X)
 
     def __getitem__(self, i):
-        return (self.X[i, ], self.Y[i])
+        return (self.X[i], self.Y[i])
 
     def load_data(self, fname):
         with open(fname) as inf:
