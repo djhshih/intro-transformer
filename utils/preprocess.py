@@ -13,15 +13,15 @@ class ShortSequenceDataset:
         self.vocab = get_vocab(seqs)
         self.init_code = self.vocab.index('^')
         self.term_code = self.vocab.index('$')
-        self.X, self.y = self.prepare(seqs)
+        self.X, self.Y = self.prepare(seqs)
         self.loader = torch.utils.data.DataLoader(
             self, batch_size=batch_size, num_workers=1, shuffle=True)
 
     def __len__(self):
-        return len(self.y)
+        return len(self.X)
 
     def __getitem__(self, i):
-        return (self.X[i, ], self.y[i])
+        return (self.X[i, ], self.Y[i])
 
     def load_data(self, fname):
         with open(fname) as inf:
@@ -53,22 +53,19 @@ class ShortSequenceDataset:
             return "".join( [self.vocab[y] for y in ys if y != self.init_code and y != self.term_code] )
         return "".join( [self.vocab[y] for y in ys] )
 
-    def expand_seq(self, seq):
-        """
-        Augment sequence by shifting.
-        """
-        for i in range(0, len(seq)-1):
-            context = pad_left(seq[:(i+1)], self.context_size, self.init_code)
-            target = seq[i+1]
-            yield (context, target)
+    def expand(self, encoded):
+        padded = pad_left(encoded, self.context_size, self.init_code)
+        x = padded[:len(padded)-1]
+        y = padded[1:]
+        return (x, y)
 
     def prepare(self, seqs):
         xs_all = []
         ys_all = []
         for i in range(len(seqs)):
-            for xs, ys in self.expand_seq(self.encode(seqs[i])):
-                xs_all.append(xs)
-                ys_all.append(ys)
+            xs, ys = self.expand(self.encode(seqs[i]))
+            xs_all.append(xs)
+            ys_all.append(ys)
         return (torch.stack(xs_all), torch.stack(ys_all))
 
 
