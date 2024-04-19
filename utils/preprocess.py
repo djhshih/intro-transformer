@@ -31,8 +31,8 @@ class ShortSequenceDataset:
                 site = '^' + line.rstrip() + '$'
                 # replace none with '_'
                 site = site.replace('none', '_')
-                # FIXME
-                # use only small enough restriction seqs
+                # TODO keep long seqs but split than during expand
+                # use only small enough seqs
                 if len(site) <= self.context_size:
                     seqs.append(site)
             return seqs
