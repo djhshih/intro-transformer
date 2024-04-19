@@ -7,13 +7,16 @@ class ShortSequenceDataset:
     Input file stores one sequence per line.
     """
 
-    def __init__(self, fname, context_size=16, batch_size=8):
+    def __init__(self, fname, device, context_size=16, batch_size=8):
         self.context_size = context_size
+        self.device = device
         seqs = self.load_data(fname)
         self.vocab = get_vocab(seqs)
         self.init_code = self.vocab.index('^')
         self.term_code = self.vocab.index('$')
         self.X, self.Y = self.prepare(seqs)
+        self.X = self.X.to(device)
+        self.Y = self.Y.to(device)
         self.loader = torch.utils.data.DataLoader(
             self, batch_size=batch_size, num_workers=1, shuffle=True)
 
