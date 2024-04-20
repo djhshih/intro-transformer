@@ -56,9 +56,15 @@ class ShortSequenceDataset:
         """
         if ys.dim() == 0:
             return self.vocab[ys.item()]
-        if strip:
-            return "".join( [self.vocab[y] for y in ys if y != self.init_code and y != self.term_code] )
-        return "".join( [self.vocab[y] for y in ys] )
+        elif ys.dim() == 1:
+            if strip:
+                chars = [self.vocab[y] for y in ys
+                    if y != self.init_code and y != self.term_code]
+            else:
+                chars = [self.vocab[y] for y in ys]
+        elif ys.dim() == 2:
+            return [ self.decode(ys[i,], strip=strip) for i in range(ys.shape[0]) ]
+        return ''.join(chars)
 
     def expand(self, encoded):
         padded = pad_left(encoded, self.context_size+1, self.init_code)
