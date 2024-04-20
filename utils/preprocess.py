@@ -88,9 +88,9 @@ def pad_left(xs, size, value):
     else:
         return xs
 
-def pad_left(xs, size, value):
+def pad_right(xs, size, value):
     if len(xs) < size:
-        return fn.pad(xs, (size - len(xs), 0),
+        return fn.pad(xs, (0, size - len(xs)),
             value = value)
     else:
         return xs
