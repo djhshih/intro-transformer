@@ -21,6 +21,10 @@ class ShortSequenceDataset:
     def __getitem__(self, i):
         return (self.X[i], self.Y[i])
 
+    def batch(self, batch_size):
+        idx = torch.randint(len(self), batch_size)
+        return self[idx]
+
     def to(self, device):
         self.X = self.X.to(device)
         self.Y = self.Y.to(device)
