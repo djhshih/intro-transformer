@@ -4,7 +4,7 @@
 
 You can setup a conda environment with dependencies installed by
 ```
-. setup.sh
+source setup.sh
 ```
 
 Then, you can run jupyter lab:
