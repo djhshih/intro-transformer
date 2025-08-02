@@ -2,7 +2,7 @@
 
 ## Lecture
 
-Review the lecture [slides](https://github.com/djhshih/intro-transformer/tree/main/doc/lec_transformer.pptx).
+Review the lecture [slides][2].
 
 ## Setup
 
@@ -29,4 +29,5 @@ asian.ipynb
 Restriction site sequences were downloaded from [NEB][1]
 
 [1]: https://www.neb.com/en/tools-and-resources/selection-charts/alphabetized-list-of-recognition-specificities
+[2]: https://github.com/djhshih/intro-transformer/raw/refs/heads/main/doc/lec_transformer.pptx
 
